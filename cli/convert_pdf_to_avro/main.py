@@ -164,10 +164,9 @@ class ProductParser:
 
             elif re.search(desc_pattern, info):
                 self.product_dict['descripcion'] = re.search(desc_pattern, info).group()
-            
+
             else:
                 self.product_dict['descripcion'] = 'Error'
-
 
 
 if __name__ == "__main__":
