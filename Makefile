@@ -10,6 +10,7 @@ DOCKER_COMPOSE_FILE := $(ROOT_FOLDER)/docker/docker-compose.yml
 DOCKER_PROJECT_NAME := $(PROJECT_NAME)-extract-load
 DOCKER_DEPENDENCIES_IMAGE := mimove/$(DOCKER_PROJECT_NAME)-base-dependecies
 DOCKER_DEPENDENCIES_IMAGE_VERSION := 1
+DOCKER_PROJECT_IMAGE := mimove/$(DOCKER_PROJECT_NAME)
 DEPENDENCIES_DOCKERFILE := docker/Dockerfile.dependencies
 DOCKER_COMMAND := docker-compose -p $(DOCKER_PROJECT_NAME) -f $(DOCKER_COMPOSE_FILE)
 
@@ -48,11 +49,10 @@ local-build: ## Build project image
 	$(DOCKER_COMMAND) build
 
 cd-build-project-image: ## Build project image
-	$(DOCKER_COMMAND) build
+	$(DOCKER_COMMAND) -t $(DOCKER_PROJECT_IMAGE):$(DOCKER_IMAGE_TAG) -f $(DEPENDENCIES_DOCKERFILE) .
 
 cd-push-project-image: ## Push project image
-	docker tag $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) $${DOCKER_USERNAME}/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
-	docker push $${DOCKER_USERNAME}/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
+	docker push $(DOCKER_PROJECT_IMAGE):$(DOCKER_IMAGE_TAG)
 
 cd-build-base-image: ## Build base image
 	docker build -t $(DOCKER_DEPENDENCIES_IMAGE):$(DOCKER_DEPENDENCIES_IMAGE_VERSION) -f $(DEPENDENCIES_DOCKERFILE) .
