@@ -1,5 +1,5 @@
 secrets/*
-*/emails/*
+cli/gmail_tickets_extraction/emails/*
 */venv/*
 */avros/*
 */csvs/*

@@ -53,10 +53,10 @@ docker-cleanup: ## Purge all Docker images in the system
 	$(DOCKER_COMMAND) down -v
 	docker system prune -f
 
-bash: ## Open a bash shell in project's main container
+bash: local-build env-start install-test-requirements## Open a bash shell in project's main container
 	$(DOCKER_COMMAND) exec service bash
 
-local-test: build env-start install-test-requirements ## Run test suite for inference in project's main container
+local-test: local-build env-start install-test-requirements ## Run test suite for inference in project's main container
 	$(DOCKER_COMMAND) exec -T service /app/scripts/test-command.sh
 
 local-linting: build env-start install-test-requirements ## Check/Enforce Python Code-Style

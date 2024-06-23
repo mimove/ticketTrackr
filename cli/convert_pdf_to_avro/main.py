@@ -51,6 +51,7 @@ class ProductParser:
         self.schema = _create_avro_schema(self)
 
     def convert_pdf_to_text(self):
+        print("Processing text to image")
         text = ''
         # Convert PDF to a list of image objects
         _images = convert_from_path(self.file_path)
@@ -160,8 +161,13 @@ class ProductParser:
                 self.product_dict['descripcion'] = info
 
             # Add description for fixed price products
+
+            elif re.search(desc_pattern, info):
+                self.product_dict['descripcion'] = re.search(desc_pattern, info).group()
+            
             else:
-                self.product_dict['descripcion'] = re.search(desc_pattern, info).group(1)
+                self.product_dict['descripcion'] = 'Error'
+
 
 
 if __name__ == "__main__":
