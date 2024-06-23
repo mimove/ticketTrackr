@@ -44,13 +44,20 @@ ci-test: ## Run test suite for inference in project's main container
 ci-linting:## Check/Enforce Python Code-Style
 	$(DOCKER_COMMAND) exec -T service /app/scripts/lint-command.sh $(LINTFLAGS)
 
-build: ## Build project image
+local-build: ## Build project image
 	$(DOCKER_COMMAND) build
 
-build-base-image: ## Build base image
+cd-build-project-image: ## Build project image
+	$(DOCKER_COMMAND) build
+
+cd-push-project-image: ## Push project image
+	docker tag $(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG) $${DOCKER_USERNAME}/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
+	docker push $${DOCKER_USERNAME}/$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)
+
+cd-build-base-image: ## Build base image
 	docker build -t $(DOCKER_DEPENDENCIES_IMAGE):$(DOCKER_DEPENDENCIES_IMAGE_VERSION) -f $(DEPENDENCIES_DOCKERFILE) .
 
-push-base-image: ## Push base image
+cd-push-base-image: ## Push base image
 	docker push $(DOCKER_DEPENDENCIES_IMAGE):$(DOCKER_DEPENDENCIES_IMAGE_VERSION)
 
 env-start: ## Start project containers defined in docker-compose
@@ -75,6 +82,3 @@ docker-cleanup: ## Purge all Docker images in the system
 
 bash: ## Open a bash shell in project's main container
 	$(DOCKER_COMMAND) exec service bash
-
-view-logs: ## Show logs
-	$(DOCKER_COMMAND) logs -f
