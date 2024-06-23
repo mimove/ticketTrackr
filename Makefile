@@ -32,10 +32,16 @@ install-test-requirements: ## Install all test dependencies
 sort-imports: ## Sort imports
 	$(DOCKER_COMMAND) exec -T service isort -rc -y .
 
-test: build env-start install-test-requirements ## Run test suite for inference in project's main container
+local-test: build env-start install-test-requirements ## Run test suite for inference in project's main container
 	$(DOCKER_COMMAND) exec -T service /app/scripts/test-command.sh
 
-linting: build env-start install-test-requirements ## Check/Enforce Python Code-Style
+local-linting: build env-start install-test-requirements ## Check/Enforce Python Code-Style
+	$(DOCKER_COMMAND) exec -T service /app/scripts/lint-command.sh $(LINTFLAGS)
+
+ci-test: ## Run test suite for inference in project's main container
+	$(DOCKER_COMMAND) exec -T service /app/scripts/test-command.sh
+
+ci-linting:## Check/Enforce Python Code-Style
 	$(DOCKER_COMMAND) exec -T service /app/scripts/lint-command.sh $(LINTFLAGS)
 
 build: ## Build project image
