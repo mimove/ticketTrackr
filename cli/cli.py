@@ -63,7 +63,7 @@ if __name__ == "__main__":
                                                   gmail_secret_path, save_dir)
     if args.convert_pdf_to_avro:
         logger.info('Starting conversion from pdf to avro')
-        pdf_dir = './extract_tickets_from_gmail/emails'
+        pdf_dir = './gmail_tickets_extraction/emails'
         ticket_tracker.convert_pdf_to_avro(pdf_dir)
 
     if args.upload_files_to_nas:
