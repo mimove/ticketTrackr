@@ -34,7 +34,7 @@ sort-imports: ## Sort imports
 	$(DOCKER_COMMAND) exec -T service isort -rc -y .
 
 env-start: ## Start project containers defined in docker-compose
-	$(DOCKER_COMMAND) up -d
+	$(DOCKER_COMMAND) up -d --build --force-recreate
 
 env-stop: ## Stop project containers defined in docker-compose
 	$(DOCKER_COMMAND) stop
@@ -53,7 +53,7 @@ docker-cleanup: ## Purge all Docker images in the system
 	$(DOCKER_COMMAND) down -v
 	docker system prune -f
 
-bash: local-build env-start install-test-requirements## Open a bash shell in project's main container
+bash: env-start install-test-requirements## Open a bash shell in project's main container
 	$(DOCKER_COMMAND) exec service bash
 
 local-test: local-build env-start install-test-requirements ## Run test suite for inference in project's main container

@@ -163,7 +163,7 @@ class ProductParser:
             # Add description for fixed price products
 
             elif re.search(desc_pattern, info):
-                self.product_dict['descripcion'] = re.search(desc_pattern, info).group()
+                self.product_dict['descripcion'] = re.search(desc_pattern, info).group(1)
 
             else:
                 self.product_dict['descripcion'] = 'Error'
