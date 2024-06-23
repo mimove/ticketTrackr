@@ -49,7 +49,7 @@ local-build: ## Build project image
 	$(DOCKER_COMMAND) build
 
 cd-build-project-image: ## Build project image
-	$(DOCKER_COMMAND) build -t $(DOCKER_PROJECT_IMAGE):$(DOCKER_IMAGE_TAG) -f $(DEPENDENCIES_DOCKERFILE) .
+	docker build -t $(DOCKER_PROJECT_IMAGE):$(DOCKER_IMAGE_TAG) -f $(DEPENDENCIES_DOCKERFILE) .
 
 cd-push-project-image: ## Push project image
 	docker push $(DOCKER_PROJECT_IMAGE):$(DOCKER_IMAGE_TAG)
