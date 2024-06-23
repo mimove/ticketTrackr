@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  lint_and_test:
+  check_linting_and_run_pytest:
     runs-on: ubuntu-latest
 
     steps:
