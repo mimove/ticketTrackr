@@ -9,6 +9,7 @@ from pdf2image import convert_from_path
 csv_dir = './convert_pdf_to_avro/csvs'
 avro_dir = './convert_pdf_to_avro/avros'
 
+
 class ProductParser:
     pdf_dir = ''
     filename = None

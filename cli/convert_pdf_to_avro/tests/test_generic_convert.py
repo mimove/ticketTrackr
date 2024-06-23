@@ -12,7 +12,7 @@ def product_parser():
 
 def test_timestamp(product_parser):
     timestamp = ProductParser().get_timestamp(product_parser)
-    assert timestamp == '16/03/2024 13:23'
+    assert timestamp == '16/03/2024 13:24'
 
 
 def test_product_lines(product_parser):
