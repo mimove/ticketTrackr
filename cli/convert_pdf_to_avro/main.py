@@ -169,7 +169,6 @@ class ProductParser:
                 self.product_dict['descripcion'] = 'Error'
 
 
-
 if __name__ == "__main__":
     pdf_dir = os.getenv('PDF_DIR')
     for file in os.listdir(pdf_dir):
