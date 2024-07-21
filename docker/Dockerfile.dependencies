@@ -9,6 +9,8 @@ LABEL org.label-schema.build-date=${BUILD_DATE} \
 
 
 # Copy the current directory contents into the container at /app
+COPY docker/scripts /app/scripts
+COPY ./cli /app/cli
 COPY ./requirements /app/requirements
 
 # Install any needed packages specified in requirements.txt

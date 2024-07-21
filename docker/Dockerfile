@@ -14,8 +14,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 COPY docker/scripts /app/scripts
-COPY cli /app/cli
-COPY requirements /app/requirements
+COPY ./cli /app/cli
+COPY ./requirements /app/requirements
 
 WORKDIR /app/cli
 
