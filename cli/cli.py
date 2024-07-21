@@ -39,6 +39,12 @@ class TicketTrackrETL:
         os.environ['SYNOLOGY_DIRECTORY'] = synology_dir
         subprocess.run(['python3', './upload_files_to_nas/main.py'], check=True)
 
+    def mark_tickets_from_gmail(self, refresh_token, sender_email, gmail_secret_path):
+        os.environ['REFRESH_TOKEN'] = refresh_token
+        os.environ['SENDER_EMAIL'] = sender_email
+        os.environ['GMAIL_CLIENT_SECRET_PATH'] = gmail_secret_path
+        subprocess.run(['python3', './mark_tickets_from_gmail/main.py'], check=True)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -51,6 +57,9 @@ if __name__ == "__main__":
     parser.add_argument("--upload_files_to_nas",
                         action="store_true",
                         help="Execute uplaod files to nas")
+    parser.add_argument("--mark_tickets_from_gmail",
+                        action="store_true",
+                        help="Mark as read tickets already processed")
     args = parser.parse_args()
     ticket_tracker = TicketTrackrETL()
     if args.extract_tickets_from_gmail:
@@ -75,3 +84,11 @@ if __name__ == "__main__":
         synology_dir = os.getenv("SYNOLOGY_DIRECTORY")
         ticket_tracker.upload_files_to_nas(synology_ip, synology_port, synology_username,
                                            synology_password, synology_dir)
+
+    if args.mark_tickets_from_gmail:
+        logger.info('Starting gmail ticket marking')
+        refresh_token = os.getenv('REFRESH_TOKEN')
+        sender_email = os.getenv('SENDER_EMAIL')
+        gmail_secret_path = os.getenv('GMAIL_CLIENT_SECRET_PATH')
+        ticket_tracker.extract_tickets_from_gmail(refresh_token, sender_email,
+                                                  gmail_secret_path)
