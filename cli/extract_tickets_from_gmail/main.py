@@ -84,4 +84,3 @@ if __name__ == "__main__":
     service = gmail_service.gmail_authenticate()
     messages = gmail_service.dowload_messages(service)
     gmail_service.download_pdfs_from_messages(service, messages)
-
