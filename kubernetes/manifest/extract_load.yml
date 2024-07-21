@@ -1,8 +1,8 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: cli-cronjob
-  namespace: my-namespace
+  name: extract-load
+  namespace: ticket-trackr
 spec:
   schedule: "0 0 * * *" # Schedule to run every day at midnight
   jobTemplate:
