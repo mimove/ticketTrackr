@@ -1,6 +1,6 @@
 # Steps to run initial nginx deployment
 
-As a first step towards learning how to use kubernetes. We have created a nginx deployment [example-nginx](./example-nginx/nginx-deployment.yaml) to test the configuration of microk8s in ubuntu server (it can be in a virtual machine or in a Rapsberry Pi with at least 2 GB of RAM)
+As a first step towards learning how to use kubernetes. We have created a nginx deployment to test the configuration of microk8s in ubuntu server (it can be in a virtual machine or in a Rapsberry Pi with at least 2 GB of RAM)
 
 ## Commands to deploy the service
 
