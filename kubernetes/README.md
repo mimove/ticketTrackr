@@ -134,3 +134,23 @@ scp <username>@<vm-ip>:~/.kube/config ~/.kube/
 8. Run k9s
 
 
+
+
+<br>
+<br>
+
+# Run CLI in the cluster
+
+To run the CLI for ticketTrackr, first you need to create the secrets of some variables inside the cluster. 
+
+To do that, you have to run the followind command (after you've defined your variables in the .env file)
+
+```sh
+microk8s kubectl create secret generic cli-env --from-env-file=.env -n <your-namespace>
+```
+
+After that, you can go to the folder with the [manifest](./manifest/extract_load.yml) and load it using this command:
+
+```sh
+microk8s kubectl apply -f extract_load.yml
+```
