@@ -4,34 +4,32 @@ metadata:
   name: extract-load
   namespace: ticket-trackr
 spec:
-  schedule: "0 0 * * *" # Schedule to run every day at midnight
+  schedule: "0 0 * * *"  # Runs every day at midnight
   jobTemplate:
     spec:
       template:
         spec:
-          imagePullSecrets:
-          - name: regcred
-          containers:
+          volumes:
+          - name: shared-data
+            emptyDir: {}
+          initContainers:
           - name: extract-emails
             image: mimove/tickettrackr-extract-load:latest
             imagePullPolicy: Always
-            command: ["sh", "-c", "python3 cli.py --extract_tickets_from_gmail"]
+            volumeMounts:
+            - name: shared-data
+              mountPath: /data
             env:
-            - name: SYNOLOGY_PASSWORD
+            - name: REFRESH_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: cli-env
-                  key: SYNOLOGY_PASSWORD
-            - name: SYNOLOGY_PORT
+                  key: REFRESH_TOKEN
+            - name: SENDER_EMAIL
               valueFrom:
                 secretKeyRef:
                   name: cli-env
-                  key: SYNOLOGY_PORT
-            - name: SYNOLOGY_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: cli-env
-                  key: SYNOLOGY_USERNAME
+                  key: SENDER_EMAIL
             - name: GMAIL_CLIENT_SECRET_PATH
               valueFrom:
                 secretKeyRef:
@@ -43,35 +41,18 @@ spec:
                   name: cli-env
                   key: GMAIL_CLIENT_SECRET
             - name: SAVE_DIR
-              valueFrom:
-                secretKeyRef:
-                  name: cli-env
-                  key: SAVE_DIR
-            - name: SYNOLOGY_IP
-              valueFrom:
-                secretKeyRef:
-                  name: cli-env
-                  key: SYNOLOGY_IP
-            - name: REFRESH_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: cli-env
-                  key: REFRESH_TOKEN
-            - name: SENDER_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: cli-env
-                  key: SENDER_EMAIL
-            - name: SYNOLOGY_DIRECTORY
-              valueFrom:
-                secretKeyRef:
-                  name: cli-env
-                  key: SYNOLOGY_DIRECTORY
-            resources:
-              requests:
-                memory: "256Mi"
-                cpu: "500m"
-              limits:
-                memory: "512Mi"
-                cpu: "1000m"
+              value: "/data/gmail_tickets_extraction/emails"
+            command: ["python3", "cli.py", "--extract_tickets_from_gmail"]
+          - name: convert-to-avro
+            image: mimove/tickettrackr-convert:latest
+            imagePullPolicy: IfNotPresent
+            volumeMounts:
+            - name: shared-data
+              mountPath: /data
+            env:
+            - name: SAVE_DIR
+              value: "/data/gmail_tickets_extraction/emails"
+            command: ["python3", "cli.py", "--convert_pdf_to_avro"]
           restartPolicy: OnFailure
+          imagePullSecrets:
+          - name: regcred
