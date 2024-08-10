@@ -6,8 +6,8 @@ import pytesseract
 from pdf2image import convert_from_path
 
 # Get the directory path where the PDF files are stored.
-csv_dir = './convert_pdf_to_avro/csvs'
-avro_dir = './convert_pdf_to_avro/avros'
+csv_dir = '/data/convert_pdf_to_avro/csvs'
+avro_dir = '/data/convert_pdf_to_avro/avros'
 
 
 class ProductParser:
