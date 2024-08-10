@@ -44,7 +44,7 @@ spec:
               value: "/data/gmail_tickets_extraction/emails"
             command: ["python3", "cli.py", "--extract_tickets_from_gmail"]
           - name: convert-to-avro
-            image: mimove/tickettrackr-convert:latest
+            image: mimove/tickettrackr-extract-load:latest
             imagePullPolicy: IfNotPresent
             volumeMounts:
             - name: shared-data
@@ -53,13 +53,10 @@ spec:
             - name: SAVE_DIR
               value: "/data/gmail_tickets_extraction/emails"
             command: ["python3", "cli.py", "--convert_pdf_to_avro"]
+          containers:
+          - name: dummy-container
+            image: alpine
+            command: ["echo", "Job finished"]
           restartPolicy: OnFailure
           imagePullSecrets:
           - name: regcred
-          containers:
-            - name: check-container
-              image: alpine
-              command: ["echo", "Job finished"]
-            restartPolicy: OnFailure
-            imagePullSecrets:
-            - name: regcred
