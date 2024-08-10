@@ -56,3 +56,10 @@ spec:
           restartPolicy: OnFailure
           imagePullSecrets:
           - name: regcred
+          containers:
+            - name: check-container
+              image: alpine
+              command: ["echo", "Job finished"]
+            restartPolicy: OnFailure
+            imagePullSecrets:
+            - name: regcred
