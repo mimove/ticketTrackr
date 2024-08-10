@@ -11,18 +11,28 @@ REFRESH_TOKEN = os.getenv('REFRESH_TOKEN')
 SENDER_EMAIL = os.getenv('SENDER_EMAIL')
 SAVE_DIR = os.getenv('SAVE_DIR')
 GMAIL_CLIENT_SECRET_PATH = os.getenv('GMAIL_CLIENT_SECRET_PATH')
+GMAIL_CLIENT_SECRET = os.getenv('GMAIL_CLIENT_SECRET')
 
 
 class GmailService:
     def __init__(self, refresh_token=REFRESH_TOKEN, sender_email=SENDER_EMAIL,
-                 save_dir=SAVE_DIR, client_secret_path=GMAIL_CLIENT_SECRET_PATH):
+                 save_dir=SAVE_DIR, client_secret_path=GMAIL_CLIENT_SECRET_PATH,
+                 client_secret_content=GMAIL_CLIENT_SECRET):
         self.refresh_token = refresh_token
         self.sender_email = sender_email
         self.save_dir = save_dir
         self.client_secret_path = client_secret_path
-
-        with open(self.client_secret_path) as f:
-            data = json.load(f)
+        self.client_secret_content = client_secret_content
+        if os.path.exists(self.client_secret_path):
+            print('here')
+            with open(self.client_secret_path) as f:
+                data = json.load(f)
+        elif self.client_secret_content:
+            decoded_content = base64.b64decode(self.client_secret_content).decode('utf-8')
+            data = json.loads(decoded_content)
+        else:
+            raise ValueError("GMAIL_CLIENT_SECRET_CONTENT environment variable\
+                    is not set or is empty.")
 
         self.client_id = data['installed']['client_id']
         self.client_secret = data['installed']['client_secret']

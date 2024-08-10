@@ -19,10 +19,12 @@ load_dotenv(dotenv_path)
 class TicketTrackrETL:
 
     def extract_tickets_from_gmail(self, refresh_token, sender_email, gmail_secret_path,
+                                   gmail_secret,
                                    save_dir):
         os.environ['REFRESH_TOKEN'] = refresh_token
         os.environ['SENDER_EMAIL'] = sender_email
         os.environ['GMAIL_CLIENT_SECRET_PATH'] = gmail_secret_path
+        os.environ['GMAIL_CLIENT_SECRET'] = gmail_secret
         os.environ['SAVE_DIR'] = save_dir
         subprocess.run(['python3', './extract_tickets_from_gmail/main.py'], check=True)
 
@@ -67,9 +69,11 @@ if __name__ == "__main__":
         refresh_token = os.getenv('REFRESH_TOKEN')
         sender_email = os.getenv('SENDER_EMAIL')
         gmail_secret_path = os.getenv('GMAIL_CLIENT_SECRET_PATH')
+        gmail_secret = os.getenv('GMAIL_CLIENT_SECRET')
         save_dir = os.getenv('SAVE_DIR')
         ticket_tracker.extract_tickets_from_gmail(refresh_token, sender_email,
-                                                  gmail_secret_path, save_dir)
+                                                  gmail_secret_path, gmail_secret,
+                                                  save_dir)
     if args.convert_pdf_to_avro:
         logger.info('Starting conversion from pdf to avro')
         pdf_dir = './gmail_tickets_extraction/emails'
