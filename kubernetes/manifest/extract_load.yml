@@ -37,6 +37,11 @@ spec:
                 secretKeyRef:
                   name: cli-env
                   key: GMAIL_CLIENT_SECRET_PATH
+            - name: GMAIL_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: cli-env
+                  key: GMAIL_CLIENT_SECRET
             - name: SAVE_DIR
               valueFrom:
                 secretKeyRef:
