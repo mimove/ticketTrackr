@@ -11,7 +11,8 @@ spec:
         spec:
           volumes:
           - name: shared-data
-            emptyDir: {}
+            persistentVolumeClaim:
+              claimName: data-pvc
           initContainers:
           - name: extract-emails
             image: mimove/tickettrackr-extract-load:latest
@@ -54,9 +55,12 @@ spec:
               value: "/data/gmail_tickets_extraction/emails"
             command: ["python3", "cli.py", "--convert_pdf_to_avro"]
           containers:
-          - name: dummy-container
-            image: alpine
-            command: ["echo", "Job finished"]
+          - name: cleanup-volume
+            image: busybox
+            command: ["sh", "-c", "rm -rf /data/*"]
+            volumeMounts:
+            - name: shared-data
+              mountPath: /data
           restartPolicy: OnFailure
           imagePullSecrets:
           - name: regcred
