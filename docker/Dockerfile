@@ -13,6 +13,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+
 COPY docker/scripts /app/scripts
 COPY ./cli /app/cli
 COPY ./requirements /app/requirements
