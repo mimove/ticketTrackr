@@ -172,7 +172,10 @@ class ProductParser:
 if __name__ == "__main__":
     pdf_dir = os.getenv('PDF_DIR')
     print(f"Path of file: {pdf_dir}")
+    counter = 1
+    n_files = len(os.listdir(pdf_dir))
     for file in os.listdir(pdf_dir):
+        print(f"Processing: {counter} of {n_files} tickets")
         if file.endswith('.pdf'):
             print(f"Processing file: {file}")
             product_list = list()
@@ -195,3 +198,4 @@ if __name__ == "__main__":
             os.makedirs(avro_dir, exist_ok=True)
             with open(f'{avro_dir}/{file.replace(".pdf", ".avro")}', 'wb') as f:
                 fastavro.writer(f, product.schema, product_list)
+            counter += 1
