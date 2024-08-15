@@ -1,11 +1,12 @@
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
   name: data-extract-load
-  namespace: ticket-trackr
 spec:
+  capacity:
+    storage: 10Gi
   accessModes:
     - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /tmp/

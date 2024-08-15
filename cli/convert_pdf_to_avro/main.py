@@ -192,6 +192,6 @@ if __name__ == "__main__":
                     product_list.append(product.product_dict)
                     product.product_dict = {}
             print(product_list)
-
+            os.makedirs(avro_dir, exist_ok=True)
             with open(f'{avro_dir}/{file.replace(".pdf", ".avro")}', 'wb') as f:
                 fastavro.writer(f, product.schema, product_list)
