@@ -171,6 +171,7 @@ class ProductParser:
 
 if __name__ == "__main__":
     pdf_dir = os.getenv('PDF_DIR')
+    print(f"Path of file: {pdf_dir}")
     for file in os.listdir(pdf_dir):
         if file.endswith('.pdf'):
             print(f"Processing file: {file}")
