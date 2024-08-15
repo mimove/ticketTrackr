@@ -55,12 +55,9 @@ spec:
               value: "/data/gmail_tickets_extraction/emails"
             command: ["python3", "cli.py", "--convert_pdf_to_avro"]
           containers:
-          - name: cleanup-volume
-            image: busybox
-            command: ["sh", "-c", "rm -rf /data/*"]
-            volumeMounts:
-            - name: shared-data
-              mountPath: /data
+          - name: dummy-container
+            image: alpine
+            command: ["echo", "Job finished"]
           restartPolicy: OnFailure
           imagePullSecrets:
           - name: regcred
