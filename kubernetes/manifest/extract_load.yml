@@ -11,8 +11,7 @@ spec:
         spec:
           volumes:
           - name: shared-data
-            persistentVolumeClaim:
-              claimName: data-pvc
+            emptyDir: {}
           initContainers:
           - name: extract-emails
             image: mimove/tickettrackr-extract-load:latest
