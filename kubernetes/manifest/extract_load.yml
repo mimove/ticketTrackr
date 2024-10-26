@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: extract-load
-  namespace: ticket-trackr
+  namespace: ticket-tracker
 spec:
   schedule: "0 0 * * *"  # Runs every day at midnight
   jobTemplate:
