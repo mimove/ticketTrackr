@@ -1,6 +1,11 @@
 # Steps to run initial nginx deployment
 
-As a first step towards learning how to use kubernetes. We have created a n[example-nginx](./example-nginx/nginx-deployment.yaml)  to test the configuration of microk8s in ubuntu server (it can be in a virtual machine or in a Rapsberry Pi with at least 2 GB of RAM)
+As a first step towards learning how to use kubernetes. We have created an [example-nginx](./example-nginx/nginx-deployment.yaml)  to test the configuration of microk8s in ubuntu server (it can be in a virtual machine or in a Rapsberry Pi with at least 2 GB of RAM)
+
+## Requirements
+
+First, you need to install microk8s following the steps on [this website](https://microk8s.io/docs/install-raspberry-pi)
+
 
 ## Commands to deploy the service
 
@@ -143,7 +148,7 @@ scp <username>@<vm-ip>:~/.kube/config ~/.kube/
 
 To run the CLI for ticketTrackr, first you need to create the secrets of some variables inside the cluster. 
 
-To do that, you have to run the followind command (after you've defined your variables in the .env file)
+To do that, you have to run the following command (after you've defined your variables in the .env file)
 
 ```sh
 microk8s kubectl create secret generic cli-env --from-env-file=.env -n <your-namespace>
