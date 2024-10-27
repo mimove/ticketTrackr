@@ -4,7 +4,17 @@ As a first step towards learning how to use kubernetes. We have created an [exam
 
 ## Requirements
 
-First, you need to install microk8s following the steps on [this website](https://microk8s.io/docs/install-raspberry-pi)
+First, you need to install microk8s running
+
+```sh
+sudo snap install microk8s --classic
+```
+
+*If you want to remove a previous installation, you can run
+
+```sh
+sudo snap remove microk8s --purge
+```
 
 
 ## Commands to deploy the service
@@ -26,8 +36,14 @@ newgrp microk8s
 3. Enable necessary services
 ```sh
 microk8s enable dns
+microk8s enable rbac
 microk8s enable storage
 ```
+* You can also verify that the API server is accesible by running
+  ```sh
+  microk8s kubectl get nodes
+  ```
+
 
 4. Create a namespace
 ```sh 
