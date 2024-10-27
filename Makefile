@@ -71,7 +71,7 @@ ci-test: ## Run test suite for inference in project's main container
 ci-linting:## Check/Enforce Python Code-Style
 	$(DOCKER_COMMAND) exec -T service /app/scripts/lint-command.sh $(LINTFLAGS)
 
-cd-build-pub-base-image: ## Build base image
+cd-build-push-base-image: ## Build base image
 	docker buildx build --platform linux/amd64,linux/arm64 -t $(DOCKER_DEPENDENCIES_IMAGE):$(DOCKER_DEPENDENCIES_IMAGE_VERSION) -f $(DEPENDENCIES_DOCKERFILE) --push .
 
 cd-build-push-project-image: ## Build project image
