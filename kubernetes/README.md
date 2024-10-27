@@ -170,6 +170,11 @@ To do that, you have to run the following command (after you've defined your var
 microk8s kubectl create secret generic cli-env --from-env-file=.env -n <your-namespace>
 ```
 
+* If you need to remove a secret to update it you can run
+  ```sh
+  kubectl delete secret cli-env -n <your-namespace>
+  ```
+
 After that, you can go to the folder with the [manifest](./manifest/extract_load.yml) and load it using this command:
 
 ```sh
