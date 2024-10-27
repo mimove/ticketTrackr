@@ -26,12 +26,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push base image
-        run: make cd-build-base-image cd-push-base-image
+        run: make cd-build-push-base-image
 
-      - name: Build project image
-        run: make cd-build-project-image
-
-      - name: Push project image
-        env:
-          DOCKER_USERNAME: ${{ vars.DOCKER_USERNAME }}
-        run: make cd-push-project-image
+      - name: Build and push project image
+        run: make cd-build-push-project-image
