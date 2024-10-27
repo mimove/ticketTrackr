@@ -24,7 +24,6 @@ class GmailService:
         self.client_secret_path = client_secret_path
         self.client_secret_content = client_secret_content
         if os.path.exists(self.client_secret_path):
-            print('here')
             with open(self.client_secret_path) as f:
                 data = json.load(f)
         elif self.client_secret_content:
