@@ -72,13 +72,13 @@ ci-linting:## Check/Enforce Python Code-Style
 	$(DOCKER_COMMAND) exec -T service /app/scripts/lint-command.sh $(LINTFLAGS)
 
 cd-build-base-image: ## Build base image
-	docker build -t $(DOCKER_DEPENDENCIES_IMAGE):$(DOCKER_DEPENDENCIES_IMAGE_VERSION) -f $(DEPENDENCIES_DOCKERFILE) .
+	docker build --platform linux/amd64,linux/arm64 -t $(DOCKER_DEPENDENCIES_IMAGE):$(DOCKER_DEPENDENCIES_IMAGE_VERSION) -f $(DEPENDENCIES_DOCKERFILE) .
 
 cd-push-base-image: ## Push base image
 	docker push $(DOCKER_DEPENDENCIES_IMAGE):$(DOCKER_DEPENDENCIES_IMAGE_VERSION)
 
 cd-build-project-image: ## Build project image
-	docker build -t $(DOCKER_PROJECT_IMAGE):$(DOCKER_IMAGE_TAG) -f $(DEPENDENCIES_DOCKERFILE) .
+	docker build --platform linux/amd64,linux/arm64 -t $(DOCKER_PROJECT_IMAGE):$(DOCKER_IMAGE_TAG) -f $(DEPENDENCIES_DOCKERFILE) .
 
 cd-push-project-image: ## Push project image
 	docker push $(DOCKER_PROJECT_IMAGE):$(DOCKER_IMAGE_TAG)
